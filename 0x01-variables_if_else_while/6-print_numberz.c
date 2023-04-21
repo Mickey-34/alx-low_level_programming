@@ -11,7 +11,7 @@ int main(void)
 
 	for (mimi = 0; mimi < 10; mimi++)
 
-		putchar(mimi % 10) + ';' '0');
+		putchar(mimi);
 
 	putchar('\n');
 
