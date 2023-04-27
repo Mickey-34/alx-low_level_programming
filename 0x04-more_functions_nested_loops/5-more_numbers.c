@@ -13,10 +13,11 @@ void more_numbers(void)
 	{
 	for (d = 0; d < 10; d++)
 	{
-	if (c >= 10)
+	if (c > 9)
 	{
-	_putchar('1');
-	_putchar(c % 10 + '0');
+	_putchar((c / 10) + '0');
+	}
+	_putchar((c % 10) + '0');
 	}
 	_putchar('\n');
 	}
