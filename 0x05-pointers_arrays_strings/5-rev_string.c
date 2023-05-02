@@ -10,8 +10,8 @@ void rev_string(char *s)
 	int mimi, box, palm;
 	char zoo;
 
-	for (mimi = 0; s[mimi] != '\0';
-	mimi++);
+	for (mimi = 0; s[mimi] != '\0'; mimi++)
+	;
 	box = 0;
 	palm = mimi / 2;
 
