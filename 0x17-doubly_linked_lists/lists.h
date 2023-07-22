@@ -11,7 +11,7 @@
  * @next: Points to the next node
  *
  * Description: Doubly linked list node structure
- * Mimi's ALX  project
+ * Mimis ALX  project
  */
 typedef struct dlistint_s
 {
