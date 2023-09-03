@@ -1,0 +1,75 @@
+#include "hash_tables.h"
+#include <stdlib.h>
+#include <string.h>
+
+/**
+ * hash_chain_set - Change an element in a singly-linked list
+ * @head: A pointer to the singly-linked list
+ * @key: A pointer to the element's key
+ * @value: A pointer to the element's new value
+ *
+ * Return: 1 upon success, otherwise 0
+ *
+ */
+int hash_chain_set(hash_node_t *head, const char *key, char *value)
+{
+	if (head)
+	{
+		if (strcmp(key, head->key))
+			return (hash_chain_set(head->next, key, value));
+
+		free(head->value);
+		head->value = value;
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * hash_table_set - Set an element in a hash table
+ * @ht: A pointer to the hash table
+ * @key: A pointer to the element's key
+ * @value: A pointer to the element's value
+ * Return: 1 upon success, otherwise 0
+ */
+int hash_table_set(hash_table_t *ht, const char *key, const char *value)
+{
+	hash_node_t *new_node = NULL;
+	char *new_value = NULL;
+	unsigned long int w = 0;
+
+	if (!(ht && key && *key))
+		return (0);
+
+	if (value)
+	{
+		new_value = strdup(value);
+		if (!new_value)
+			return (0);
+	}
+
+	w = key_w((const unsigned char *) key, ht->size);
+
+	if (hash_chain_set(ht->array[w], key, new_value))
+		return (1);
+
+	new_node = malloc(sizeof(*new_node));
+	if (!new_node)
+	{
+		free(new_value);
+		return (0);
+	}
+
+	new_node->key = strdup(key);
+	if (!new_node->key)
+	{
+		free(new_value);
+		free(new_node);
+		return (0);
+	}
+
+	new_node->value = new_value;
+	new_node->next = ht->array[w];
+	ht->array[w] = new_node;
+	return (1);
+}
