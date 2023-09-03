@@ -9,7 +9,6 @@
  * @value: A pointer to the element's new value
  *
  * Return: 1 upon success, otherwise 0
- *
  */
 int hash_chain_set(hash_node_t *head, const char *key, char *value)
 {
@@ -31,12 +30,13 @@ int hash_chain_set(hash_node_t *head, const char *key, char *value)
  * @key: A pointer to the element's key
  * @value: A pointer to the element's value
  * Return: 1 upon success, otherwise 0
+ *
  */
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
 	hash_node_t *new_node = NULL;
 	char *new_value = NULL;
-	unsigned long int w = 0;
+	unsigned long int index = 0;
 
 	if (!(ht && key && *key))
 		return (0);
@@ -48,9 +48,9 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 			return (0);
 	}
 
-	w = key_w((const unsigned char *) key, ht->size);
+	index = key_index((const unsigned char *) key, ht->size);
 
-	if (hash_chain_set(ht->array[w], key, new_value))
+	if (hash_chain_set(ht->array[index], key, new_value))
 		return (1);
 
 	new_node = malloc(sizeof(*new_node));
@@ -69,7 +69,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	}
 
 	new_node->value = new_value;
-	new_node->next = ht->array[w];
-	ht->array[w] = new_node;
+	new_node->next = ht->array[index];
+	ht->array[index] = new_node;
 	return (1);
 }
